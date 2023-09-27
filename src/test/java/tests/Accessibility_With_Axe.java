@@ -7,7 +7,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -15,7 +14,6 @@ import org.testng.annotations.Test;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.Duration;
 
 import static org.testng.Assert.assertTrue;
 
@@ -51,10 +49,21 @@ public class Accessibility_With_Axe {
             driver.executeScript("seetest:client.report", "Violations found", "false");
 
             int counter = 1;
-            for (Object violation : violations) {
-                driver.executeScript("seetest:client.report", "Violation " + counter++ + violation.toString(), "false");
-            }
+            for (int i = 0; i < violations.length(); i++) {
+                driver.executeScript("seetest:client.startStepsGroup", "Violation Group - " + counter++);
 
+                JSONObject violation = violations.getJSONObject(i);
+
+                String help = violation.getString("help");
+                driver.executeScript("seetest:client.report", "Help: " + help, "false");
+
+                JSONArray nodes = violation.getJSONArray("nodes");
+                JSONObject node = nodes.getJSONObject(0);
+                String failureSummary = node.getString("failureSummary");
+                driver.executeScript("seetest:client.report", "Failure Summary: " + failureSummary, "false");
+
+                driver.executeScript("seetest:client.stopStepsGroup");
+            }
             AXE.writeResults(method.getName(), responseJson);
             assertTrue(false, AXE.report(violations));
         }
