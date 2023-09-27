@@ -44,7 +44,6 @@ public class Accessibility_With_Axe {
 
         if (violations.isEmpty()) {
             driver.executeScript("seetest:client.report", "No violations found", "true");
-            System.out.println("No violation found!");
         } else {
             driver.executeScript("seetest:client.report", "Violations found", "false");
 
