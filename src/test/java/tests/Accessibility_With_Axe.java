@@ -19,7 +19,7 @@ import static org.testng.Assert.assertTrue;
 
 public class Accessibility_With_Axe {
 
-    protected String ACCESS_KEY = "";
+    protected String ACCESS_KEY = "<INSERT_ACCESS_KEY>";
     protected RemoteWebDriver driver;
     protected DesiredCapabilities capabilities = new DesiredCapabilities();
     protected JavascriptExecutor jse;
@@ -37,7 +37,7 @@ public class Accessibility_With_Axe {
 
     @Test
     public void ada_with_axe_test(Method method) throws MalformedURLException {
-        driver.get("https://www.digital.ai");
+        driver.get("https://demo-bank.ct.digital.ai/");
 
         JSONObject responseJson = new AXE.Builder(driver, new URL("https://axejsfile.s3.us-east-2.amazonaws.com/axe.min.js")).analyze();
         JSONArray violations = responseJson.getJSONArray("violations");
