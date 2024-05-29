@@ -17,7 +17,7 @@ import java.net.URL;
 
 import static org.testng.Assert.assertTrue;
 
-public class Accessibility_With_Axe {
+public class AccessibilityTest_With_Axe {
 
     protected String ACCESS_KEY = "<INSERT_ACCESS_KEY>";
     protected RemoteWebDriver driver;
